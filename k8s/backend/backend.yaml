@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog-backend-deployment
+  labels:
+    app: blog-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: blog-backend-pod
+  template:
+    metadata:
+      labels:
+        app: blog-backend-pod
+    spec:
+      containers:
+      - name: blog-backend-container
+        image: prass6naa/blog-backend:v1
+        ports:
+        - containerPort: 5003
+        
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: DB_PASSWORD
+
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: backend-configmap
+              key: db_host
+
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: backend-configmap
+              key: db_user
+
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: backend-configmap
+              key: db_name
+
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog-backend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: blog-backend-pod
+  ports:
+    - name: http
+      port: 5003
+      targetPort: 5003   
