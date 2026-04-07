@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: blog-frontend-container
-        image: prass6naa/blog-frontend:v2
+        image: prass6naa/blog-frontend:82e5ae6
         ports:
         - containerPort: 80
         

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: blog-backend-container
-        image: prass6naa/blog-backend:v1
+        image: prass6naa/blog-backend:82e5ae6
         ports:
         - containerPort: 5003
         
